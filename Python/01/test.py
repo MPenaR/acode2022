@@ -19,7 +19,6 @@ for line in lines:
     else:
         elve_records.append(elve_record())
 
-
 elve_records = sorted(elve_records, key = lambda record : record.total, reverse=True)
 
 print("first part")
