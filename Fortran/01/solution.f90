@@ -3,7 +3,7 @@ program solution
     implicit none
 
     integer :: u, io_code, current_elf, item 
-    integer :: elf1, elf2, elf3, temp
+    integer :: elf1, elf2, elf3
     character(len=6) :: line
 
     open( file = 'input', newunit=u, status='old', action='read')
