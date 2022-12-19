@@ -1,12 +1,15 @@
 program solution
-    use, intrinsic :: iso_fortran_env, Only : iostat_end
+    use, intrinsic :: iso_fortran_env, only: iostat_end
     implicit none
 
     integer :: u, io_code, current_elf, item 
     integer :: elf1, elf2, elf3
     character(len=6) :: line
+    character(len=32) :: filename
 
-    open( file = 'input', newunit=u, status='old', action='read')
+    call get_command_argument(1, filename )
+    
+    open( file = trim(filename), newunit=u, status='old', action='read')
 
     current_elf = 0
     elf1 = 0
@@ -35,6 +38,7 @@ program solution
  contains
 
     subroutine update_head( first, second, third, current)
+        !> updates the record of the 3 higher item counts
         integer, intent(inout) :: first, second, third
         integer, intent(in) :: current 
             if ( current > first ) then
