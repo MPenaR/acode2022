@@ -20,8 +20,8 @@ module games
         character(len=1), intent(in) :: you_code, me_code
         type(game) :: g
         integer :: you, me 
-        you = ichar(you_code) - ichar('A')
-        me = ichar(me_code) - ichar('X')
+        you = iachar(you_code) - iachar('A')
+        me = iachar(me_code) - iachar('X')
         g = game(you, me)
     end function
 
@@ -29,8 +29,8 @@ module games
         character(len=1), intent(in) :: you_code, me_code
         type(game) :: g
         integer :: you, me 
-        you = ichar(you_code) - ichar('A')
-        me = modulo( you + ichar(me_code) - ichar('Y'), 3 )
+        you = iachar(you_code) - iachar('A')
+        me = modulo( you + iachar(me_code) - iachar('Y'), 3 )
         g = game(you, me )
     end function
     
