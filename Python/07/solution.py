@@ -10,12 +10,13 @@ class FileSystem:
 
     def cd( self, name : str):
         '''Emulates the behaviour of `cd` '''
-        if name == '/':
-            self.pwd = self.root
-        elif name == '..':
-            self.pwd = self.pwd.parent
-        else:
-            self.pwd = self.pwd.subdirectories[name]
+        match name:
+            case '/':
+                self.pwd = self.root
+            case '..':
+                self.pwd = self.pwd.parent
+            case folder:
+                self.pwd = self.pwd.subdirectories[folder]
     def mkdir( self, name):
         '''Emulates the behaviour of `mkdir` '''
         pwd = self.pwd
@@ -96,21 +97,19 @@ class File:
         self.name = file_name
         self.size = file_size
 
-
 def parse_lines(lines, FS):
     for line in lines:
         words = line.split(' ')
-        if words[0] == '$': #is command
-            if words[1] == 'ls':
-                pass
-            else:
-                FS.cd(words[2])
-        else:
-            if words[0] == 'dir':
-                FS.mkdir(name=words[1])
-            else:
 
-                FS.pwd.add_file( file_name = words[1], file_size = int(words[0]))
+        match words:
+            case ['$', 'ls']:
+                pass
+            case ['$', 'cd', folder]:
+                FS.cd(folder)
+            case ['dir', folder]:
+                FS.mkdir(name=words[1])
+            case [ size, filename] :
+                FS.pwd.add_file( file_name = filename, file_size = int(size))                
     return FS
 
 
