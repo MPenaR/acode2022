@@ -35,7 +35,7 @@ contains
         type(char_set):: common_set
         character(len=1) :: common_letters(1), letter
         
-        common_set = char_set(left) * char_set(left) 
+        common_set = char_set(left) * char_set(right) 
         common_letters = common_set%to_array()
         letter = common_letters(1)
     end function
