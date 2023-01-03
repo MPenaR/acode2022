@@ -1,5 +1,6 @@
 program solution
     use iso_fortran_env, only: iostat_end
+    use sets
     implicit none
     character(len=10) :: filename
     integer :: u, score,  io_code, l
@@ -25,20 +26,18 @@ program solution
         end select
     end do 
 
-    print*, score
+    print'(A," ",I0)', 'Part 1:',score
 
 contains
-    function find_common_letter( left, right) result(common)
-        character(len=*), intent(in) :: left, right
-        character(len=1) :: common
-        integer :: i, j 
 
-        outer : do i = 1,len(left)
-                    do j=1,len(right)
-                        if ( left(i:i) == right(j:j) ) exit outer
-                    end do 
-                end do outer
-        common = left(i:i)
+    function find_common_letter( left, right) result(letter)
+        character(len=*), intent(in) :: left, right
+        type(char_set):: common_set
+        character(len=1) :: common_letters(1), letter
+        
+        common_set = char_set(left) * char_set(left) 
+        common_letters = common_set%to_array()
+        letter = common_letters(1)
     end function
 
     function compute_score(letter) result(score)
@@ -47,6 +46,5 @@ contains
 
         if ( (iachar(letter) >= iachar('A') ) .and. (iachar(letter) <= iachar('Z') ) ) score = iachar(letter) - iachar('A') + 27
         if ( (iachar(letter) >= iachar('a') ) .and. (iachar(letter) <= iachar('z') ) ) score = iachar(letter) - iachar('a') + 1
-
     end function 
 end program 
